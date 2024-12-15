@@ -1,26 +1,17 @@
-mod diesel_test;
-mod models;
+mod repository;
 mod schema;
+mod entity;
 
 #[macro_use] extern crate rocket;
 
-use crate::diesel_test::establish_connection;
-use diesel::prelude::*;
-use crate::models::Post;
+use itertools::Itertools;
+use crate::repository::*;
 
 #[get("/")]
 fn index() -> String {
-    use self::schema::posts::dsl::*;
-    let connection = &mut establish_connection();
-    let results = posts
-        .filter(published.eq(true))
-        .limit(5)
-        .select(Post::as_select())
-        .load(connection)
-        .expect("Error loading posts");
-    results.iter()
-        .map(|p| format!("{:#?}", p))
-        .collect::<Vec<_>>()
+    stars::list_all()
+        .into_iter()
+        .map(|s| format!("{:#?}", s))
         .join("\n")
 }
 

@@ -7,3 +7,4 @@ edition = "2021"
 rocket = "0.5.1"
 diesel = { version = "2.2.6", features = ["postgres"] }
 dotenvy = "0.15.7"
+itertools = "0.13.0"

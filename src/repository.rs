@@ -1,3 +1,5 @@
+pub mod stars;
+
 use std::env;
 use diesel::prelude::*;
 use dotenvy::dotenv;

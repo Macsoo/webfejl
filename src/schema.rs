@@ -1,10 +1,12 @@
 // @generated automatically by Diesel CLI.
 
 diesel::table! {
-    posts (id) {
+    star (id) {
         id -> Int4,
-        title -> Varchar,
-        body -> Text,
-        published -> Bool,
+        right_ascension -> Float8,
+        declination -> Float8,
+        light_years -> Float4,
+        magnitude -> Float4,
+        bv_value -> Float4,
     }
 }
