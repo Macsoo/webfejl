@@ -1,8 +1,6 @@
-// @generated automatically by Diesel CLI.
-
 diesel::table! {
     star (id) {
-        id -> Int4,
+        id -> Serial,
         right_ascension -> Float8,
         declination -> Float8,
         light_years -> Float4,

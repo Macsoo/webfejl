@@ -1006,6 +1006,7 @@ dependencies = [
  "rocket_codegen",
  "rocket_http",
  "serde",
+ "serde_json",
  "state",
  "tempfile",
  "time",
@@ -1520,6 +1521,8 @@ dependencies = [
  "dotenvy",
  "itertools",
  "rocket",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
