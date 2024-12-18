@@ -1,4 +1,5 @@
 pub mod stars;
+pub mod constellations;
 
 use std::env;
 use diesel::prelude::*;

@@ -1,0 +1,1 @@
+ALTER TABLE "star" DROP CONSTRAINT IF EXISTS fk_constellation_id_star;

@@ -1,8 +1,9 @@
 use diesel::prelude::*;
 use rocket::serde::{Deserialize, Serialize};
 
-#[derive(Queryable, Selectable, Serialize, Deserialize, AsChangeset)]
+#[derive(Queryable, Selectable, Serialize, Deserialize, AsChangeset, Associations)]
 #[diesel(table_name = crate::schema::star)]
+#[diesel(belongs_to(crate::entity::constellation::Constellation))]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Star {
     pub id: i32,
@@ -11,6 +12,7 @@ pub struct Star {
     pub light_years: f32,
     pub magnitude: f32,
     pub bv_value: f32,
+    pub constellation_id: Option<i32>,
 }
 
 #[derive(Insertable, Deserialize)]
@@ -22,4 +24,5 @@ pub struct NewStar {
     pub light_years: f32,
     pub magnitude: f32,
     pub bv_value: f32,
+    pub constellation_id: Option<i32>,
 }
