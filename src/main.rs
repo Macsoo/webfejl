@@ -21,10 +21,19 @@ fn star_single(id: i32) -> Option<Json<Star>> {
     stars::single(id).map(|s| Json(s))
 }
 
+#[put("/stars", data = "<data>")]
+fn star_update(data: Json<Star>) -> Status {
+    if stars::update(&data.into_inner()) {
+        Status::Ok
+    } else {
+        Status::NotFound
+    }
+}
+
 #[post("/stars", data = "<data>")]
 fn star_insert(data: Json<NewStar>) -> Status {
     stars::insert(data.into_inner());
-    Status::Ok
+    Status::Created
 }
 
 #[delete("/stars/<id>")]
@@ -41,6 +50,7 @@ fn rocket() -> _ {
     rocket::build().mount("/", routes![
         star_list,
         star_single,
+        star_update,
         star_insert,
         star_delete,
     ])

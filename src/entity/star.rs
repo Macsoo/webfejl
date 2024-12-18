@@ -1,7 +1,7 @@
 use diesel::prelude::*;
 use rocket::serde::{Deserialize, Serialize};
 
-#[derive(Queryable, Selectable, Serialize)]
+#[derive(Queryable, Selectable, Serialize, Deserialize, AsChangeset)]
 #[diesel(table_name = crate::schema::star)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Star {

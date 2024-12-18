@@ -35,3 +35,11 @@ pub fn delete(star_id: i32) -> bool {
         .execute(connection)
         .expect("Error deleting star")
 }
+
+pub fn update(star_entity: &Star) -> bool {
+    let connection = &mut establish_connection();
+    1 == diesel::update(star.filter(id.eq(star_entity.id)))
+        .set(star_entity)
+        .execute(connection)
+        .expect("Error updating star")
+}
