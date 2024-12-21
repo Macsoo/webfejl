@@ -4,7 +4,7 @@ use rocket::serde::json::Json;
 use crate::controller::constellation;
 use crate::entity::constellation::*;
 use crate::entity::star::Star;
-use crate::repository::constellations;
+use crate::repository::{constellations, stars};
 
 #[get("/")]
 fn list() -> Json<Vec<Constellation>> {
@@ -19,6 +19,11 @@ fn find(id: i32) -> Option<Json<Constellation>> {
 #[get("/<id>/stars")]
 fn get_stars(id: i32) -> Option<Json<Vec<Star>>> {
     constellations::stars(id).map(|s| Json(s))
+}
+
+#[post("/<id>/add_star", data = "<data>")]
+fn add_star(id: i32, data: Json<i32>) -> Status {
+    stars::add_to_constellation(data.into_inner(), id)
 }
 
 #[put("/", data = "<data>")]
@@ -46,5 +51,5 @@ fn remove(id: i32) -> Status {
 }
 
 pub fn routes() -> Vec<Route> {
-    routes![list, get_stars, find, update, insert, remove]
+    routes![list, get_stars, find, update, insert, remove, add_star]
 }

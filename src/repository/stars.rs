@@ -2,6 +2,8 @@ use diesel::insert_into;
 use crate::entity::star::*;
 use crate::repository::*;
 use diesel::prelude::*;
+use diesel::result::*;
+use rocket::http::Status;
 use crate::schema::star::dsl::*;
 
 pub fn list_all() -> Vec<Star> {
@@ -42,4 +44,17 @@ pub fn update(star_entity: &Star) -> bool {
         .set(star_entity)
         .execute(connection)
         .expect("Error updating star")
+}
+
+pub fn add_to_constellation(star_id: i32, const_id: i32) -> Status {
+    let connection = &mut establish_connection();
+    let update_result = diesel::update(star.filter(id.eq(star_id)))
+        .set(constellation_id.eq(const_id))
+        .execute(connection);
+    match update_result {
+        Ok(1) => Status::Ok,
+        Ok(0) => Status::NotFound,
+        Err(Error::DatabaseError(DatabaseErrorKind::ForeignKeyViolation, _)) => Status::NotAcceptable,
+        _ => Status::InternalServerError,
+    }
 }
