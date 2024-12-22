@@ -48,6 +48,7 @@ window.bvChanged = function () {
     const form = document.querySelector('form.addstarmenu');
     const bv = +form.querySelector('#addstarbv').value;
     form.querySelector('#addstarcolor').setAttribute('value', bv2rgb(bv));
+    form.querySelector('#addstarcolor').value = bv2rgb(bv);
 }
 
 window.addStar = async function () {
