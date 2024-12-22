@@ -1,20 +1,75 @@
 <!DOCTYPE HTML>
 <html lang="en">
-    <head>
-        <title>Constellations</title>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
-        <link rel="stylesheet" href="index.css"/>
-    </head>
-    <body>
-        <script type="importmap">
-            {
-              "imports": {
-                "three": "https://cdn.jsdelivr.net/npm/three@v0.171.0/build/three.module.js",
-                "three/addons/": "https://cdn.jsdelivr.net/npm/three@v0.171.0/examples/jsm/"
-              }
-            }
-        </script>
-        <script type="module" src="index.js"></script>
-    </body>
+<head>
+    <title>Constellations</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="index.css"/>
+</head>
+<body>
+<script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@v0.171.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@v0.171.0/examples/jsm/"
+      }
+    }
+</script>
+<script type="module" src="index.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<div id="g_id_onload"
+     data-client_id="650203781301-h0hji16k038agj6j8gn9ouprpm1dlae9.apps.googleusercontent.com"
+     data-callback="handleCredentialResponse">
+</div>
+<div class="header">
+    <div class="g_id_signin" data-type="standard"></div>
+    <button onclick="getStars()">Get stars</button>
+    <button onclick="showAddStar(true)">Add star</button>
+</div>
+<form class="starmenu">
+    <label for="stardist">Distance in light years</label>
+    <input type="number" id="stardist"/>
+    <label for="starcolor">Color of star</label>
+    <input type="color" id="starcolor" disabled/>
+    <label for="starmagnitude">Magnitude of star</label>
+    <input type="number" id="starmagnitude"/>
+    <label for="starra">Right ascension of star</label>
+    <input type="number" id="starra" disabled/>
+    <label for="starde">Declination of star</label>
+    <input type="number" id="starde" disabled/>
+    <input type="button" value="Delete star" onclick="deleteStar()"/>
+    <input type="button" value="Update star" onclick="updateStar()"/>
+</form>
+<form class="addstarmenu">
+    <label for="addstardist">Distance in light years</label>
+    <input type="number" id="addstardist"/>
+    <label for="addstarbv">B-V value of star</label>
+    <input type="number" id="addstarbv" onchange="bvChanged()" step="0.01"/>
+    <label for="addstarcolor">Color of star</label>
+    <input type="color" id="addstarcolor" disabled/>
+    <label for="addstarmagnitude">Magnitude of star</label>
+    <input type="number" id="addstarmagnitude"/>
+    <label for="addstarra">Right ascension of star</label>
+    <input type="number" id="addstarra"/>
+    <label for="addstarde">Declination of star</label>
+    <input type="number" id="addstarde"/>
+    <input type="button" value="Choose coords" onclick="chooseCoords()"/>
+    <input type="button" value="Submit" onclick="addStar()"/>
+    <input type="button" value="Cancel" onclick="showAddStar(false)"/>
+</form>
+<script>
+    async function handleCredentialResponse(response) {
+        const r = await fetch("http://localhost:8000/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "text/plain",
+            },
+            body: response.credential
+        });
+        if (r.ok) {
+            logIn();
+        }
+    }
+</script>
+</body>
 </html>

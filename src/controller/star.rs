@@ -1,11 +1,12 @@
 use rocket::{Build, Rocket, Route};
 use rocket::http::Status;
 use rocket::serde::json::Json;
+use crate::claims::Claims;
 use crate::entity::star::{NewStar, Star};
 use crate::repository::stars;
 
 #[get("/")]
-fn list() -> Json<Vec<Star>> {
+fn list(_claims: Claims) -> Json<Vec<Star>> {
     Json(stars::list_all())
 }
 

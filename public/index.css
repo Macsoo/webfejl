@@ -1,3 +1,55 @@
 body {
     margin: 0;
 }
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000;
+    gap: 1em;
+    position: fixed;
+}
+
+.header.loggedIn > .g_id_signin {
+    display: none;
+}
+
+.header > button {
+    display: none;
+}
+
+.header.loggedIn > button {
+    display: block;
+}
+
+.starmenu {
+    display: none;
+    position: fixed;
+    right: 0;
+}
+
+.starmenu.loggedIn.hasStar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5em;
+    background-color: #bbb;
+    padding: 0.2em;
+}
+
+.addstarmenu {
+    display: none;
+    position: fixed;
+    right: 0;
+}
+
+.addstarmenu.loggedIn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5em;
+    background-color: #bbb;
+    padding: 0.2em;
+}
